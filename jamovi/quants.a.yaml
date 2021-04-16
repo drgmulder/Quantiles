@@ -30,6 +30,7 @@ options:
        title: Total sample size
        type: Number
        default: 100
+       min: 2
      - name: grp
        title: Number of groups 
        type: Number
