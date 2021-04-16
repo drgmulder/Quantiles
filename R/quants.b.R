@@ -58,7 +58,7 @@ quantsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           image$setState(plotData)
           
         },
-        .plot <- function(image, ...) {
+        .plot = function(image, ...) {
           # the plot function 
           plotData <- image$state
           
