@@ -13,7 +13,8 @@ quantsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         if (self$options$distr == "normdist" ) {
             results <- c("z-value"=qnorm(self$options$quant))
             self$results$text$setContent(results)
-        } # end if norm 
+            plotData <- data.frame(x=c(-3, 3))
+            } # end if norm 
         if (self$options$distr == "tdist") {
             if (self$options$N == 0 | self$options$grp == 0) {
                 results <- "Please fill in total sample size and/or number of groups"
@@ -21,7 +22,8 @@ quantsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             } else {
             df <- self$options$N - self$options$grp
             results <- c("t-value"=qt(self$options$quant, df), "df"=df)
-            self$results$text$setContent(results) }
+            self$results$text$setContent(results) 
+            plotData <- data.frame(x=c(-3, 3))}
         } # end if t
         
         if (self$options$distr == "chidist") {
@@ -33,10 +35,12 @@ quantsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                     df <- self$options$numCols - 1 
                     results <- c("chisq-value"=qchisq(self$options$quant, df), "df"=df)
                     self$results$text$setContent(results) 
+                    plotData <- data.frame(x=c(0, ceiling(qchisq(.999, df))))
                 } else {
                 df <- (self$options$numRows - 1)*(self$options$numCols - 1)
                 results <- c("chisq-value"=qchisq(self$options$quant, df), "df"=df)
-                self$results$text$setContent(results) }
+                self$results$text$setContent(results)
+                plotData <- data.frame(x=c(0, ceiling(qchisq(.995, df))))}
                 }
             
         } # end if chisq
@@ -49,10 +53,11 @@ quantsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                     if (df1 == 0) df1 <- 1
                     df2 <- self$options$N - self$options$grp 
                     results <- c("F-value"=qf(self$options$quant, df1, df2), "df1"=df1, "df2"=df2)
-                    self$results$text$setContent(results) }
+                    self$results$text$setContent(results) 
+                    plotData <- data.frame(x=c(0, ceiling(qf(.995, df1, df2))))}
                 
             } # end if F
-          plotData <- data.frame(x=c(-3, 3))
+          
           
           image <- self$results$plot
           image$setState(plotData)
@@ -62,12 +67,46 @@ quantsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           # the plot function 
           plotData <- image$state
           
+          if (self$options$distr == "normdist") {
+            densFunc <- stat_function(fun = dnorm)
+            xint <- qnorm(self$options$quant)
+            theTitle <- ggtitle("Standard Normal Distribution")
+          }
+          if (self$options$distr == "tdist") {
+            df = self$options$N - self$options$grp
+            densFunc <- stat_function(fun = dt, args = list(df = df))
+            xint <- qt(self$options$quant, df)
+            theTitle <- ggtitle("Student t Distribution")
+          }
+          
+          if (self$options$distr == "chidist") {
+            if (self$options$numRows == 1) { 
+              df <- self$options$numCols - 1 
+            } else {
+              df <- (self$options$numRows - 1)*(self$options$numCols - 1)
+              }
+            
+            densFunc <- stat_function(fun = dchisq, args = list(df = df))
+            xint <- qchisq(self$options$quant, df)
+            theTitle <- ggtitle("Chi-squared Distribution")
+          }
+          
+          if (self$options$distr == "fdist") {
+            df1 <- self$options$grp - 1
+            if (df1 == 0) df1 <- 1
+            df2 <- self$options$N - self$options$grp 
+            
+            densFunc <- stat_function(fun = df, args = list(df1 = df1, df2 = df2))
+            xint <- qf(self$options$quant, df1, df2)
+            theTitle <- ggtitle("F Distribution")
+          }
+          
           thePlot <- ggplot(plotData, aes(x)) + 
-            stat_function(fun=dnorm) +
-            scale_x_continuous(name="Quantile", breaks=seq(-3, 3, by=.50)) + 
+            densFunc +
+            scale_x_continuous(name="Quantile", breaks=seq(min(plotData$x), max(plotData$x), by=.50)) + 
             scale_y_continuous(name="Density") + 
-            geom_vline(xintercept = qnorm(.975), linetype="dashed") +
-            ggtitle("Standard Normal Distribution") +
+            geom_vline(xintercept = xint, linetype="dashed") +
+            theTitle +
             theme(plot.title = element_text(hjust = 0.5))
           print(thePlot)
           TRUE

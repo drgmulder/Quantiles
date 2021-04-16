@@ -78,7 +78,7 @@ quantsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     inherit = jmvcore::Group,
     active = list(
         text = function() private$.items[["text"]],
-        image = function() private$.items[["image"]]),
+        plot = function() private$.items[["plot"]]),
     private = list(),
     public=list(
         initialize=function(options) {
@@ -92,7 +92,7 @@ quantsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 title="Quantile"))
             self$add(jmvcore::Image$new(
                 options=options,
-                name="image",
+                name="plot",
                 title="Distribution plot",
                 width=400,
                 height=300,
@@ -130,7 +130,7 @@ quantsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$text} \tab \tab \tab \tab \tab a preformatted \cr
-#'   \code{results$image} \tab \tab \tab \tab \tab an image \cr
+#'   \code{results$plot} \tab \tab \tab \tab \tab an image \cr
 #' }
 #'
 #' @export
