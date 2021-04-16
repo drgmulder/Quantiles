@@ -8,7 +8,7 @@ items:
       title: Quantile
       type:  Preformatted
       
-    - name: plot
+    - name: image
       title: Distribution plot
       type: Image
       width: 400
