@@ -29,6 +29,7 @@ options:
      - name: N
        title: Total sample size
        type: Number
+       default: 20
      - name: grp
        title: Number of groups 
        type: Number
