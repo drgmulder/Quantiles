@@ -1,0 +1,21 @@
+---
+title: Find Quantiles
+name: Quantiles
+version: 1.0.0
+jms: '1.0'
+authors:
+  - Gerben Mulder
+maintainer: null
+date: '2021-04-14'
+type: R
+description: 'This tool finds quantiles for four common distributions. '
+analyses:
+  - title: Find Quantiles
+    name: quants
+    ns: Quantiles
+    menuGroup: Quantiles
+    menuTitle: Find Quantiles
+usesNative: true
+minApp: 1.0.8
+
+...

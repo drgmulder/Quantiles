@@ -1,0 +1,11 @@
+---
+name:  quants
+title: Find Quantile
+jrs:   '1.1'
+
+items:
+    - name:  text
+      title: Quantile
+      type:  Preformatted
+
+...

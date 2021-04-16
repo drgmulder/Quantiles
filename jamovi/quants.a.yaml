@@ -1,0 +1,47 @@
+---
+name:  quants
+title: Find Quantiles
+menuGroup: Quantiles
+version: '1.0.0'
+jas: '1.2'
+
+options:
+     - name: distr
+       title: Distribution
+       type: List
+       default: normdist
+       options:
+        - name: normdist
+          title: Standard Normal
+        - name: tdist
+          title: Student t
+        - name: chidist
+          title:  Chi-Squared
+        - name: fdist
+          title: F
+          
+     - name: quant
+       title: Quantile
+       type: Number
+       default: .975
+       min: .0001
+       max: .9999
+     - name: N
+       title: Total sample size
+       type: Number
+     - name: grp
+       title: Number of groups 
+       type: Number
+       default: 1
+     - name: numRows
+       title: Number of Rows
+       type: Number
+       default: 2
+     - name: numCols
+       title: Number of Columns
+       type: Number
+       default: 2
+     
+
+      
+...

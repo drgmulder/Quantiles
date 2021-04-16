@@ -1,0 +1,41 @@
+title: Find Quantiles
+name: quants
+jus: '3.0'
+stage: 0
+compilerMode: aggressive
+children:
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: ComboBox
+        name: distr
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: quant
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: 'N'
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: grp
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: numRows
+        format: number
+  - type: LayoutBox
+    margin: large
+    children:
+      - type: TextBox
+        name: numCols
+        format: number
