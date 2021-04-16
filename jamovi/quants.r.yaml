@@ -7,5 +7,12 @@ items:
     - name:  text
       title: Quantile
       type:  Preformatted
+      
+    - name: plot
+      title: Distribution plot
+      type: Image
+      width: 400
+      height: 300
+      renderFun: .plot
 
 ...
