@@ -2,7 +2,7 @@ title: Find Quantiles
 name: quants
 jus: '3.0'
 stage: 0
-compilerMode: aggressive
+compilerMode: tame
 children:
   - type: LayoutBox
     margin: large
