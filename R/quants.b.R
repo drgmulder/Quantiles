@@ -52,5 +52,24 @@ quantsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                     self$results$text$setContent(results) }
                 
             } # end if F
+          plotData <- data.frame(x=c(-3, 3))
+          
+          image <- self$results$plot
+          image$setState(plotData)
+          
+        },
+        .plot <- function(image, ...) {
+          # the plot function 
+          plotData <- image$state
+          
+          thePlot <- ggplot(plotData, aes(x)) + 
+            stat_function(fun=dnorm) +
+            scale_x_continuous(name="Quantile", breaks=seq(-3, 3, by=.50)) + 
+            scale_y_continuous(name="Density") + 
+            geom_vline(xintercept = qnorm(.975), linetype="dashed") +
+            ggtitle("Standard Normal Distribution") +
+            theme(plot.title = element_text(hjust = 0.5))
+          print(thePlot)
+          TRUE
         })
 )
