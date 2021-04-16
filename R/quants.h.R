@@ -8,7 +8,7 @@ quantsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         initialize = function(
             distr = "normdist",
             quant = 0.975,
-            N = NULL,
+            N = 100,
             grp = 1,
             numRows = 2,
             numCols = 2, ...) {
@@ -36,7 +36,9 @@ quantsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 max=0.9999)
             private$..N <- jmvcore::OptionNumber$new(
                 "N",
-                N)
+                N,
+                default=100,
+                min=2)
             private$..grp <- jmvcore::OptionNumber$new(
                 "grp",
                 grp,
@@ -137,7 +139,7 @@ quantsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 quants <- function(
     distr = "normdist",
     quant = 0.975,
-    N,
+    N = 100,
     grp = 1,
     numRows = 2,
     numCols = 2) {
